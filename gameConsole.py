@@ -90,8 +90,7 @@ def hero_turn(villain, potion, hero):
 
     return hero, villain, potion   
         
-            
-            
+             
 
 def vill_turn(hero):    
     
@@ -101,16 +100,9 @@ def vill_turn(hero):
     hero -= v_att
     print(f'Enemy attacks. \nDamage taken: {v_att}. ') # \nCurrent hitpoints: {hero}\n
     return hero
-            
-'''
-def win_lose(hero, villain):
-    if hero == 0:
-        print ('Game over, you lose.')
         
-    elif villain == 0:
-        print('You win!!')
-'''
 
+        
 def game(hero, villain, potion):
     while hero >= 0:
         hero, villain, potion = hero_turn(villain, potion, hero) 
@@ -128,9 +120,5 @@ def game(hero, villain, potion):
 
 game(hero, villain, potion)
 
-'''
-villain = hero_turn(villain, potion, hero)
-# health_bar(villain)
-hero = vill_turn(hero)       
-'''
+
 

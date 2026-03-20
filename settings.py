@@ -4,75 +4,133 @@ hero = 100
 villain = 120
 potion = 3
 
+chance = random.randint(0,9)
 
+print(f'Crit: {chance}')
 
-
-def health_status(villain):
+def health_bar(n):
+    
     hp_bar = []
-    for x in range(1, villain):
-        if x % 5 == 0:
-            hp_bar.append('#')
+    for x in range(1, n):
+        if x % 4 == 0:
+            hp_bar.append('X')
         
-    print(f'Hitpoints: {villain} ', *hp_bar, sep='' ) # '*' unpacks the array, 'sep=' makes the spaces between characters void ('')
+    print(f'Hitpoints: {n} \n', *hp_bar, sep='' ) # '*' unpacks the array, 'sep=' makes the spaces between characters void ('')
 
 
-health_status(villain)
 
 def hero_turn(villain, potion, hero):
     
-
+    
     print('''
         --- Choose an action:
-          1. Normal Attack
-          2. Special Attack
-          3. Heal
+        1. Normal Attack
+        2. Special Attack
+        3. Heal
 
-          ''')
-    
+        ''')
+
     h_op = input('-- ')
-
+        
     if h_op == '1':
         
         h_att = random.randint(10,25)
-        villain -= h_att
-        print (f'Damage made: {h_att}, \nVillain remaining hp : {villain}')
+        crit = random.randint(0,9)
+        print(f'Roll: {crit}')
 
-        return villain
+        if crit == chance:
+            h_att *= 2
+            villain -= h_att
+            print (f'Critical hit! Damage made: {h_att}, \nEnemy remaining hp : {villain}\n')
+        else:
+            villain -= h_att
+            print (f'You attack. \nDamage made: {h_att}, \nEnemy remaining hp : {villain}\n')
+
+        
     
     elif h_op == '2':
     
-        spa = random.randint(1,2)
+        spa = random.randint(0,1)
+        print(f'Roll_spa: {spa}')
     
-        if spa == 12:
+        if spa == 1:
     
             spa_d = random.randint(30,50)
-            villain -= spa_d
-            print(f'Attack suceeded! Damage made: {spa_d}')
-            return villain
+            crit = random.randint(0,9)
+            print(f'Roll: {crit}')
+
+            if crit == chance:
+                spa_d *= 2    
+                villain -= spa_d
+                print(f'Critical attack suceeded! Damage made: {spa_d}\n')
+            
+            else: 
+                villain -= spa_d
+                print(f'Attack suceeded! Damage made: {spa_d}\n')
+            
+            
     
         else:
-            print('You failed.')
+            print('You failed.\n')
+            
+
     
     elif h_op == '3':
         
-        while potion > 0:
+        if potion > 0:
             potion -= 1
             hero += 20
-            print(f'Hp restored, now have {hero} points left.')
-            return hero, potion
+            print(f'Hp restored, now have {hero} points left.\n')
         else:
-            print('No potions available.')
+            print('No potions available.\n')
+            
+    
+    else:
+        print('Invalid option, choose again.\n')
+
+    return hero, villain, potion   
+        
+            
+            
 
 def vill_turn(hero):    
-    print('Villain turn.')
+    
+    print('-- Villain turn --')
 
     v_att = random.randint(15,20)
     hero -= v_att
-    print(f'Damage taken: {v_att}. Current hitpoints: {hero}')
+    print(f'Enemy attacks. \nDamage taken: {v_att}. ') # \nCurrent hitpoints: {hero}\n
     return hero
             
+'''
+def win_lose(hero, villain):
+    if hero == 0:
+        print ('Game over, you lose.')
+        
+    elif villain == 0:
+        print('You win!!')
+'''
 
+def game(hero, villain, potion):
+    while hero >= 0:
+        hero, villain, potion = hero_turn(villain, potion, hero) 
+        health_bar(villain) 
+        hero = vill_turn(hero)
+        health_bar(hero)
+
+        if hero <= 0:
+            print ('-- Game over, you lose. --')
+            break
+
+        elif villain <= 0:
+            print('-- You win!! --')
+            break
+
+game(hero, villain, potion)
+
+'''
 villain = hero_turn(villain, potion, hero)
-health_status(villain)
+# health_bar(villain)
 hero = vill_turn(hero)       
-print('Current hp: ', hero)
+'''
+

@@ -31,7 +31,9 @@ def hero_turn(villain, potion, hero):
         ''')
 
     h_op = input('-- ')
-        
+    
+    # try:
+
     if h_op == '1':
         
         h_att = random.randint(10,25)
@@ -54,7 +56,7 @@ def hero_turn(villain, potion, hero):
         print(f'Roll_spa: {spa}')
     
         if spa == 1:
-    
+            
             spa_d = random.randint(30,50)
             crit = random.randint(0,9)
             print(f'Roll: {crit}')
@@ -68,11 +70,9 @@ def hero_turn(villain, potion, hero):
                 villain -= spa_d
                 print(f'Attack suceeded! Damage made: {spa_d}\n')
             
-            
-    
         else:
             print('You failed.\n')
-            
+            # Continue
 
     
     elif h_op == '3':
@@ -80,13 +80,15 @@ def hero_turn(villain, potion, hero):
         if potion > 0:
             potion -= 1
             hero += 20
-            print(f'Hp restored, now have {hero} points left.\n')
+            print(f'Hp restored ({hero}).\nPotions left: {potion} \n')
         else:
             print('No potions available.\n')
-            
+            # Continue        
     
+    # except 
     else:
         print('Invalid option, choose again.\n')
+        # Continue
 
     return hero, villain, potion   
         
@@ -94,7 +96,7 @@ def hero_turn(villain, potion, hero):
 
 def vill_turn(hero):    
     
-    print('-- Villain turn --')
+    print('\n-- Villain turn --')
 
     v_att = random.randint(15,20)
     hero -= v_att
@@ -102,7 +104,7 @@ def vill_turn(hero):
     return hero
         
 
-        
+
 def game(hero, villain, potion):
     while hero >= 0:
         hero, villain, potion = hero_turn(villain, potion, hero) 
@@ -111,11 +113,11 @@ def game(hero, villain, potion):
         health_bar(hero)
 
         if hero <= 0:
-            print ('-- Game over, you lose. --')
+            print ('\n-- Game over, you lose. --')
             break
 
         elif villain <= 0:
-            print('-- You win!! --')
+            print('\n-- You win!! --')
             break
 
 game(hero, villain, potion)
